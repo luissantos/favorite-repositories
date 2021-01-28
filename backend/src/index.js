@@ -1,9 +1,22 @@
 import Express from 'express';
 import Api from './api';
+import DBManager from './dal/DBManager'
 
 const app = Express();
 
-Api(app);
+let dbm = new DBManager({
+    client: 'sqlite3',
+    connection: {
+      filename: "./mydb.sqlite"
+    },
+    useNullAsDefault: true
+  });
+dbm.init();
+
+let repository = new FavoriteRepository(dbm);
+
+Api(app,repository);
+
 
 
 app.listen(3000,  () => {
