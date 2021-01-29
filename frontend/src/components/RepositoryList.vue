@@ -1,24 +1,46 @@
 <template>
-    <b-table striped hover :items="items"></b-table>
+  <div>
+    <b-table striped hover :fields="fields" :items="repositories.items">
+   
+    <template #cell(favorite)="data">
+      <a v-if="data.favorite" @click="setFavorite(data)" href="#">
+        <b-icon-star-fill />
+      </a>
+        
+      <a v-if="!data.favorite" @click="deleteFavorite(data)" href="#">
+        <b-icon-star />
+      </a>
+      </template>
+
+    </b-table>
+  </div>
 </template>
 
 <script>
+//import GitHubClient from '../api/GitHubClient'
+import store from '../store'
 export default {
   name: 'RepositoryList',
   props: {
     msg: String
   },
+  
   data() {
       return {
-        items: [
-          { name: "react-tetris", login_name: 'chvin', repository_size: 4319, favorite: false },
-        ]
+        fields: [ "name","login_name","repository_size","favorite" ],
+        repositories: store.state.repositories,
+        setFavorite: (item) => {
+           this.$emit('favorited', item,"set")
+        },
+        deleteFavorite: (item) => {
+          this.$emit('favorited', item,"deleted")
+        }
       }
     }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 h3 {
   margin: 40px 0 0;
