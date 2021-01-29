@@ -22,7 +22,6 @@ export default {
   props: {
     msg: String
   },
-  
   data() {
       return {
         fields: [ "name","login_name","repository_size","favorite" ],

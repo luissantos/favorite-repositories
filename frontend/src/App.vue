@@ -8,7 +8,7 @@
 <script>
 
 import RepositoryList from './components/RepositoryList.vue';
-import RepositoryService from './services/RepositoryService'
+import RepositoryService from './services/repository.service'
 import store from './store';
 import GitHubClient from './api/github.client'
 import BackendClient from './api/backend.client'

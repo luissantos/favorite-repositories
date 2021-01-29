@@ -3,24 +3,26 @@
 
 export default class RepositoryServce {
 
-    constructor(ghClient,beClient){
+    constructor(ghClient, beClient) {
         this.ghClient = ghClient;
         this.beClient = beClient;
         this.getRepositories = this.getRepositories.bind(this);
     }
 
-    async getRepositories(page){
-        let res = await this.ghClient.getRepositories("tetris",page);
-
-        let favorites = await this.beClient.getFavorites(1);
-
-        let favmap = {};
-        favorites.items.forEach( (f) => {
-            favmap[f.repo_id] = f;
-        });
+    async getRepositories(page) {
 
 
-        return res.items.map( (i) => {
+        let [repositories, favorites] = await Promise.all([
+            this.ghClient.getRepositories("tetris", page),
+            this.beClient.getFavorites(1)]);
+
+        let favmap = favorites.items
+            .reduce((map, item) => {
+                map[item.repo_id] = item; return map;
+            }, {});
+
+
+        return repositories.items.map((i) => {
             return {
                 id: i.node_id,
                 name: i.name,

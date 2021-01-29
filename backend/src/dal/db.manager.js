@@ -8,8 +8,6 @@ export default class DBManager {
          * @type knex
          */
         this._dbconfig = dbconfig;
-        this.init = this.init.bind(this);
-        this.close = this.close.bind(this);
     }
 
 
@@ -34,7 +32,5 @@ export default class DBManager {
     get connection(){
         return this._connection;
     }
-
-
 
 }

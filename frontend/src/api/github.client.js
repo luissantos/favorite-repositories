@@ -4,12 +4,10 @@ import axios from 'axios'
 export default class GitHubClient {
 
     constructor() {
-
         this.instance = axios.create({
             baseURL: 'https://api.github.com/search/',
             timeout: 5000
         });
-
     }
 
     getRepositories(search_term, page) {

@@ -4,8 +4,8 @@ import subset from 'chai-subset'
 import request from 'supertest';
 import Api from '../src/api'
 import Express from 'express';
-import DBManager from '../src/dal/DBManager';
-import FavoriteRepository from '../src/dal/FavoriteRepository';
+import DBManager from '../src/dal/db.manager';
+import FavoriteRepository from '../src/dal/favorite.repository';
 
 chai.use(subset);
 
