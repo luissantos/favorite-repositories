@@ -7,7 +7,7 @@ export default class GitHubClient {
 
         this.instance = axios.create({
             baseURL: 'https://api.github.com/search/',
-            timeout: 2000
+            timeout: 5000
         });
 
     }

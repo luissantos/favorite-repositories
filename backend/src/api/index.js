@@ -1,35 +1,52 @@
 import { Router } from 'express';
 import Express from 'express';
 import FavoriteRepository from '../dal/FavoriteRepository';
+import cors from 'cors';
 
 
 export default (app,/** @type FavoriteRepository */ repo) => {
     const router = Router();
     
+
+    const handleError = (req,res) => (error) => {
+        res.status(500).send({ error: 'Something failed!' })
+    }
+  
     app.use(Express.json());
     app.use(Express.urlencoded({extended : true}));
+    app.use(cors());
+    
     
 
-    router.get("/users/:userid/favorites/repo/", async (req,res) => {
-        let items = await repo.getAll(req.params.userid);
-        res.send({ items });
+    router.get("/users/:userid/favorites/repo/", (req,res) => {
+        repo.getAll(req.params.userid)
+                    .then((d)=> {
+                        res.send({ items: d });
+                    })
+                   .catch(handleError(req,res));
     });
     
 
-    router.put("/users/:userid/favorites/repo/:repoid", async (req,res) => {
-        let r = await repo.add(req.params.userid,req.params.repoid);
-        res.send();
+    router.put("/users/:userid/favorites/repo/:repoid", (req,res) => {
+        repo.add(req.params.userid,req.params.repoid)
+                   .then((d)=> {
+                       res.send({});
+                   })
+                   .catch(handleError(req,res));
+        
     });
     
-    router.delete("/users/:userid/favorites/repo/:repoid", async (req,res) => {
-        let result = await repo.delete(req.params.userid,req.params.repoid);
-        if(result == 1){
-            res.status(200)
-            .send();
-        }else{
-            res.status(404)
-            .send();
-        }
+    router.delete("/users/:userid/favorites/repo/:repoid", (req,res) => {
+        repo.delete(req.params.userid,req.params.repoid).then( (result) => {
+            if(result === 1){
+                res.status(200)
+                .send();
+            }else{
+                res.status(404)
+                .send();
+            }
+        }).catch(handleError(req,res));
+        
         
     });
     

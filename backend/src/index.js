@@ -1,6 +1,7 @@
 import Express from 'express';
 import Api from './api';
 import DBManager from './dal/DBManager'
+import FavoriteRepository from './dal/FavoriteRepository'
 
 const app = Express();
 

@@ -10,7 +10,14 @@
 import RepositoryList from './components/RepositoryList.vue';
 import RepositoryService from './services/RepositoryService'
 import store from './store';
-import GitHubClient from './api/GitHubClient'
+import GitHubClient from './api/github.client'
+import BackendClient from './api/backend.client'
+
+const ghClient = new GitHubClient();
+const beClient = new BackendClient();
+const service = new RepositoryService(ghClient,beClient);
+
+
 
 export default {
   name: 'App',
@@ -19,13 +26,21 @@ export default {
   },
   data: function() {
     return {
-      onFavorite: (item,action)=>{
-        console.log(item,action);
+      onFavorite: (item)=>{
+        
+        if(item.favorite){
+          beClient.deleteFavorite(1,item.id).then( ()=> {
+            store.setFavorite(item.id,!item.favorite);
+          })
+        }else{
+          beClient.addFavorite(1,item.id).then(()=> {
+            store.setFavorite(item.id,!item.favorite);
+          });
+        }
+
+        
       },
       refresh : ()=> {
-
-        const client = new GitHubClient();
-        const service = new RepositoryService(client);
         service.getRepositories(1).then((d)=> {
           store.refresh(d);
         })
@@ -50,7 +65,6 @@ export default {
 }
 
 button {
-  //float: left;
   margin-bottom: 10px;
 }
 
