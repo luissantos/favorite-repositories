@@ -48,8 +48,6 @@ describe('API', function () {
         .send({})
         .expect(200);
 
-
-
       let res = await request(app)
         .get('/users/1/favorites/repo/')
         .expect(200);
