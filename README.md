@@ -1,4 +1,13 @@
 
+# Application
+
+![Dashboard](docs/screenshot.png)
+
+Instructions:
+* Use the refresh button to reload the list 
+* Use the arrows to navigate between different pages
+* Click on of the star to mark the respective repository as favorite
+
 # How run the application 
 ```sh 
 # install dependencies
