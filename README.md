@@ -47,7 +47,7 @@ At this stage only backend has automated tests.
 
 Possible future steps:
 
-* Use cyprus for both component testing and e2e testing. 
+* Use cypress for both component testing and e2e testing. 
   * The component testing would allow us to make sure all components work as expected and that interactions between component work as expected
   * e2e as part of CI/CD workflow would allow us that the critical parts of our application is as expected.
 * Adapt the API tests to run as e2e and be used to test the deployment in CI/CD setup
