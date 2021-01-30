@@ -4,6 +4,7 @@
 ![Dashboard](docs/screenshot.png)
 
 Instructions:
+* Open http://localhost:8080/
 * Use the refresh button to reload the list 
 * Use the arrows to navigate between different pages
 * Click on of the star to mark the respective repository as favorite
