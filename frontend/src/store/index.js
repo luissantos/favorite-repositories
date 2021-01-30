@@ -3,8 +3,10 @@
 export default {
   state: {
     repositories: {
-        items: {}
+        items: [],
+        page: 1
     }
+
   },
   refresh(items){
    this.state.repositories.items = items;
@@ -16,7 +18,8 @@ export default {
             item.favorite = val;
         }
     })
+  },
+  setPage(page){
+    this.state.repositories.page = page;
   }
-
-
 };

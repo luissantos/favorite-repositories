@@ -8,6 +8,9 @@ export default class BackendClient {
             baseURL: 'http://localhost:3000/',
             timeout: 2000
         });
+
+        this.addFavorite = this.addFavorite.bind(this);
+        this.deleteFavorite = this.deleteFavorite.bind(this);
     }
 
     getFavorites(userId) {

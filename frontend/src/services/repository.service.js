@@ -1,5 +1,6 @@
 
-
+const userId = 1;
+const searchCriteria = "tetris";
 
 export default class RepositoryServce {
 
@@ -13,8 +14,8 @@ export default class RepositoryServce {
 
 
         let [repositories, favorites] = await Promise.all([
-            this.ghClient.getRepositories("tetris", page),
-            this.beClient.getFavorites(1)]);
+            this.ghClient.getRepositories(searchCriteria, page),
+            this.beClient.getFavorites(userId)]);
 
         let favmap = favorites.items
             .reduce((map, item) => {

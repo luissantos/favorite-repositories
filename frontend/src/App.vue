@@ -1,55 +1,53 @@
 <template>
   <div id="app">
-    <b-button @click="refresh()" >Refresh</b-button>
-    <RepositoryList @favorited="onFavorite" id="list" msg="Welcome to Your Vue.js App"/>
+    <b-button @click="changePage(1)">Refresh List</b-button>
+    <Pagination id="pagination" @changed="changePage" />
+    <RepositoryList id="list" @favorited="onFavorite" />
   </div>
 </template>
 
 <script>
-
-import RepositoryList from './components/RepositoryList.vue';
-import RepositoryService from './services/repository.service'
-import store from './store';
-import GitHubClient from './api/github.client'
-import BackendClient from './api/backend.client'
+import RepositoryList from "./components/RepositoryList.vue";
+import Pagination from "./components/Pagination.vue";
+import RepositoryService from "./services/repository.service";
+import store from "./store";
+import GitHubClient from "./api/github.client";
+import BackendClient from "./api/backend.client";
 
 const ghClient = new GitHubClient();
 const beClient = new BackendClient();
-const service = new RepositoryService(ghClient,beClient);
-
-
+const service = new RepositoryService(ghClient, beClient);
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    RepositoryList
+    RepositoryList,
+    Pagination,
   },
-  data: function() {
+  mounted() {
+    this.changePage(1);
+  },
+  data: function () {
     return {
-      onFavorite: (item)=>{
-        
-        if(item.favorite){
-          beClient.deleteFavorite(1,item.id).then( ()=> {
-            store.setFavorite(item.id,!item.favorite);
-          })
-        }else{
-          beClient.addFavorite(1,item.id).then(()=> {
-            store.setFavorite(item.id,!item.favorite);
-          });
-        }
-
-        
-      },
-      refresh : ()=> {
-        service.getRepositories(1).then((d)=> {
+      changePage: (page) => {
+        service.getRepositories(page).then((d) => {
           store.refresh(d);
-        })
+          store.setPage(page);
+        });
+      },
+      onFavorite: (item) => {
+        const toggleFavorite = item.favorite
+          ? beClient.deleteFavorite
+          : beClient.addFavorite;
         
-      }
-    }
-    
-  }
-}
+
+        toggleFavorite(1, item.id).then(() => {
+          store.setFavorite(item.id, !item.favorite);
+        });
+      },
+    };
+  },
+};
 </script>
 
 <style>
@@ -66,6 +64,10 @@ export default {
 
 button {
   margin-bottom: 10px;
+}
+
+#pagination {
+  float: right;
 }
 
 #list {

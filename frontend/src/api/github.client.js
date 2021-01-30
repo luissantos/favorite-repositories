@@ -14,7 +14,7 @@ export default class GitHubClient {
         return this.instance.get("/repositories", {
             params: {
                 q: search_term,
-                page: page != null ? 1 : page
+                page: page != null ? page : 1
             }
         }).then((res) => res.data)
     }
