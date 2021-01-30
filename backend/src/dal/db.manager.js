@@ -11,6 +11,9 @@ export default class DBManager {
     }
 
 
+    /**
+     * Sets up the DB connection and create the tables if not available.
+     */
     init(){
         this._connection = knex(this._dbconfig);
         return this._connection.schema.hasTable('favorites').then((exists) => {

@@ -3,13 +3,15 @@ import axios from 'axios'
 
 export default class GitHubClient {
 
-    constructor() {
-        this.instance = axios.create({
-            baseURL: 'https://api.github.com/search/',
-            timeout: 5000
-        });
+    constructor(config) {
+        this.instance = axios.create(config);
     }
 
+    /**
+     * Gets all the repositories bases on search term
+     * @param {String} search_term 
+     * @param {Number} page 
+     */
     getRepositories(search_term, page) {
         return this.instance.get("/repositories", {
             params: {

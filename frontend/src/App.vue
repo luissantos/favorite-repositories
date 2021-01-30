@@ -13,9 +13,10 @@ import RepositoryService from "./services/repository.service";
 import store from "./store";
 import GitHubClient from "./api/github.client";
 import BackendClient from "./api/backend.client";
+import config from './config'
 
-const ghClient = new GitHubClient();
-const beClient = new BackendClient();
+const ghClient = new GitHubClient(config.github);
+const beClient = new BackendClient(config.backend);
 const service = new RepositoryService(ghClient, beClient);
 
 export default {
@@ -52,9 +53,6 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;

@@ -1,17 +1,12 @@
 import Express from 'express';
 import Api from './api';
-import DBManager from './dal/db.manager'
-import FavoriteRepository from './dal/favorite.repository'
+import DBManager from './dal/db.manager';
+import FavoriteRepository from './dal/favorite.repository';
+import config from './config';
 
 const app = Express();
 
-let dbm = new DBManager({
-    client: 'sqlite3',
-    connection: {
-      filename: "./mydb.sqlite"
-    },
-    useNullAsDefault: true
-  });
+let dbm = new DBManager(config.database);
 dbm.init();
 
 let repository = new FavoriteRepository(dbm);
